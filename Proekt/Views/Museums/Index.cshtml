@@ -1,0 +1,69 @@
+﻿@model IEnumerable<Proekt.Models.Museum>
+
+@{
+    ViewBag.Title = "Музеи";
+}
+
+<h2>Музеи</h2>
+
+<p>
+    @if (User.IsInRole("Administrator"))
+    {
+        @Html.ActionLink("Create New", "Create")
+    }
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Contact)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.WorkTime)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Contact)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.WorkTime)
+                </td>
+                <td>
+                    @if (User.IsInRole("Administrator"))
+                    {
+                        @Html.ActionLink("Edit", "Edit", new { id = item.MusesumId })
+                    }
+                    @Html.ActionLink("Details", "Details", new { id = item.MusesumId }) 
+                    @Html.ActionLink("Purchase", "Purchase", new { id = item.MusesumId }) 
+                    @if (User.IsInRole("Administrator"))
+                    {
+                        @Html.ActionLink("Delete", "Delete", new { id = item.MusesumId })
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+@section scripts{
+    <script>
+        $(".table").DataTable();
+    </script>
+}
